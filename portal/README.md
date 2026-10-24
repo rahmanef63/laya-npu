@@ -18,7 +18,8 @@ docker compose up -d --build
 
 | route | purpose |
 |---|---|
-| `GET /` | landing page: what the NPU is for, four-step install, live counters |
+| `GET /` | landing page: flow diagram, one-line install, four-step install, live counters |
+| `GET /i.ps1` | Windows bootstrap: downloads the source, then runs `install.ps1` from it |
 | `GET /api/devices` | the registry table |
 | `GET /api/summary` | totals by device and OS, used by the hero counters |
 | `POST /api/device/register` | called by local installs every 5 minutes |

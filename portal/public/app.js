@@ -126,6 +126,41 @@ $("link-input")?.addEventListener("keydown", (e) => {
   if (e.key === "Enter") checkDevice();
 });
 
+// Copy the one-line installer. Falls back to selecting the text when the clipboard
+// API is unavailable, which is the case on plain http:// origins.
+function copyOneLine(btn) {
+  const text = $("oneline-cmd").textContent.trim();
+  const done = () => {
+    btn.textContent = "Copied";
+    btn.classList.add("done");
+    setTimeout(() => {
+      btn.textContent = "Copy";
+      btn.classList.remove("done");
+    }, 1600);
+  };
+  if (navigator.clipboard?.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(() => copyFallback(text, done));
+  } else {
+    copyFallback(text, done);
+  }
+}
+
+function copyFallback(text, done) {
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  ta.style.position = "fixed";
+  ta.style.opacity = "0";
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand("copy");
+    done();
+  } catch {
+    /* leave the text selected; the user can copy it manually */
+  }
+  document.body.removeChild(ta);
+}
+
 loadRegistry();
 detectHardware();
 setInterval(loadRegistry, 60000);

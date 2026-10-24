@@ -89,6 +89,12 @@ Stated plainly, because a security document that only lists strengths is not use
 - **Windows only for the NPU path**, so the driver stack is outside this project's
   control.
 
+- **The one-line installer executes remote code.** `irm https://laya.manef.dev/i.ps1 | iex`
+  fetches a script and pipes it into PowerShell, so the TLS chain and this domain are the
+  trust boundary. The script is 30 lines in `portal/public/i.ps1` and only downloads the
+  archive and invokes `install.ps1`; the zip path is offered as the alternative. It pins
+  nothing and verifies no checksum.
+
 ## Supported versions
 
 Only the current `main` is supported. This is a single-maintainer project with no

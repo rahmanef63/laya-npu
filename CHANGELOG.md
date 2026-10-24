@@ -4,6 +4,19 @@ Notable changes. Dates are shipping dates, not commit dates.
 
 ## 2026-10-24
 
+Landing page gained the two things a visitor asked for: a diagram of what actually
+happens, and an install that is one line instead of four steps.
+
+- **Flow diagram** on the landing page: input, optional Whisper, Laya's typed answers,
+  your policy, the action. Pure CSS, no script. It also states the 2/12 vs 22/22 split,
+  so the "why does Python decide instead of the model" question is answered before it is
+  asked.
+- **One-line Windows install**: `irm https://laya.manef.dev/i.ps1 | iex`. The bootstrap
+  is 30 lines, downloads the archive, and hands off to `install.ps1`; a second run reuses
+  the existing copy and keeps `.env`. README and SECURITY both say plainly that this
+  executes remote code and that the zip path is equivalent without it.
+- Portal route `/i.ps1` serves the bootstrap as `text/plain`.
+
 Hardening pass ahead of opening the repo.
 
 - **The API no longer binds to all interfaces by default.** `127.0.0.1` unless you set

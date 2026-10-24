@@ -117,6 +117,22 @@ The key is forwarded server-side, never written to disk, never echoed back. Set
 
 ### Windows (has the NPU)
 
+One line, no clone:
+
+```powershell
+irm https://laya.manef.dev/i.ps1 | iex
+```
+
+That downloads the source to `%USERPROFILE%\laya-npu` and runs the installer in it.
+Run it again later and it reuses the existing copy, keeping your `.env`.
+
+**`irm | iex` runs code from the network, so read it first if that matters to you:**
+the bootstrap is `portal/public/i.ps1` in this repo, 30 lines, and it does nothing but
+download the archive and call `install.ps1`. Downloading the zip and double-clicking
+`install.cmd` is the same thing without the network execution.
+
+Or clone and run the installer directly:
+
 ```powershell
 git clone https://github.com/rahmanef63/laya-npu.git
 cd laya-npu

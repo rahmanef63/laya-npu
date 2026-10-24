@@ -243,6 +243,7 @@ class Handler(BaseHTTPRequestHandler):
             "/manifest.json": ("manifest.json", "application/manifest+json"),
             "/sitemap.xml": ("sitemap.xml", "application/xml"),
             "/robots.txt": ("robots.txt", "text/plain"),
+            "/i.ps1": ("i.ps1", "text/plain; charset=utf-8"),
         }
         if p in ASSETS:
             name, ctype = ASSETS[p]

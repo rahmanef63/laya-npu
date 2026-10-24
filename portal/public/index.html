@@ -52,6 +52,7 @@
     <header>
       <a class="brand" href="https://manef.dev"><span class="mark"></span>laya<span class="dim">npu</span></a>
       <nav>
+        <a href="#how">How it works</a>
         <a href="#install">Install</a>
         <a href="#check">Check my machine</a>
         <a href="https://github.com/rahmanef63/laya-npu">GitHub</a>
@@ -81,12 +82,97 @@
         </div>
       </section>
 
+      <section id="how">
+        <h2>How a decision happens</h2>
+        <p class="sub">
+          Two stages, both on the NPU, neither touching a network. The model only
+          perceives; plain Python decides. That split is the whole design.
+        </p>
+
+        <div class="flow">
+          <div class="flow-col">
+            <div class="flow-box hot">
+              <span class="flow-k">Input</span>
+              <span class="flow-t">Audio or text</span>
+              <span class="flow-d">
+                A voice note, a ticket body, an email, a file from a watched folder.
+              </span>
+              <span class="flow-m">mic · textarea · folder · POST</span>
+            </div>
+            <div class="flow-box">
+              <span class="flow-k">Stage 1 · optional</span>
+              <span class="flow-t">Whisper transcription</span>
+              <span class="flow-d">
+                Audio becomes text. Any format, because ffmpeg ships with it.
+              </span>
+              <span class="flow-m">57x realtime · int8 · NPU</span>
+            </div>
+          </div>
+
+          <div class="arrow">→</div>
+
+          <div class="flow-col">
+            <div class="flow-box hot">
+              <span class="flow-k">Stage 2</span>
+              <span class="flow-t">Laya reads it</span>
+              <span class="flow-d">
+                421M classifier answers the questions you defined. Probabilities only,
+                never prose.
+              </span>
+              <span class="flow-m">29 ms · int8 · NPU</span>
+            </div>
+            <div class="flow-box">
+              <span class="flow-k">Output</span>
+              <span class="flow-t">Typed answers</span>
+              <span class="flow-d">
+                One value per question: a choice, an ordinal score, or P(yes).
+              </span>
+              <span class="flow-m">JSON · no parsing</span>
+            </div>
+          </div>
+
+          <div class="arrow">→</div>
+
+          <div class="flow-col">
+            <div class="flow-box hot">
+              <span class="flow-k">Stage 3 · yours</span>
+              <span class="flow-t">Policy in Python</span>
+              <span class="flow-d">
+                A dict and a few <code>if</code> statements map answers to an action.
+                You own this part.
+              </span>
+              <span class="flow-m">tasks.py</span>
+            </div>
+            <div class="flow-box">
+              <span class="flow-k">Result</span>
+              <span class="flow-t">An action</span>
+              <span class="flow-d">
+                Route to billing, hold for approval, block the prompt, file the receipt.
+              </span>
+              <span class="flow-m">0.9 s audio → action</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="caution">
+          The model deliberately does <b>not</b> choose the action. Asking it directly scores
+          2/12 on our test set; asking its questions and deciding in Python scores 22/22. It
+          reads text well and knows your policy not at all.
+        </p>
+      </section>
+
       <section id="install">
         <h2>Install</h2>
         <p class="sub">
           Windows with an Intel Core Ultra gets the NPU path. Everything else runs on the
           GPU or CPU — same answers, slower.
         </p>
+
+        <div class="oneline">
+          <span class="tag">Windows</span>
+          <code id="oneline-cmd">irm https://laya.manef.dev/i.ps1 | iex</code>
+          <button class="copy" onclick="copyOneLine(this)">Copy</button>
+        </div>
 
         <div class="dl-grid">
           <a class="dl-card primary" href="https://github.com/rahmanef63/laya-npu/archive/refs/heads/main.zip">
