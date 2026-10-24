@@ -1,0 +1,82 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    name: python syntax, imports, lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax check every module
+        run: |
+          for f in server/*.py tests/*.py portal/app.py register.py scripts/*.py; do
+            python -c "import ast,sys; ast.parse(open('$f').read())" || exit 1
+          done
+
+      - name: Guard, schema and task contracts
+        run: python scripts/check-imports.py
+
+  web:
+    name: frontend types and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm ci
+      - name: Type check
+        run: npx svelte-check --tsconfig ./tsconfig.json --threshold error
+      - name: Build
+        run: npm run build
+      - name: Build produced an index
+        run: test -f web/dist/index.html
+
+  hygiene:
+    name: secrets, junk, dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: No committed secrets
+        run: |
+          if git grep -InE '(sk-[a-zA-Z0-9]{20,}|ghp_[a-zA-Z0-9]{30,}|AKIA[0-9A-Z]{16}|mso_pat_[a-f0-9]{20,}|ck_[A-Za-z0-9]{20,})' \
+              -- ':!*.md' ':!package-lock.json'; then
+            echo "::error::a secret-looking string is committed"
+            exit 1
+          fi
+          echo "no secrets found"
+
+      - name: No build output or local state committed
+        run: |
+          if git ls-files | grep -E '(__pycache__|\.pyc$|node_modules/|\.sqlite$|^\.env$|web/dist/)'; then
+            echo "::error::build output or local state is committed"
+            exit 1
+          fi
+          echo "tree is clean"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Dependency audit
+        run: |
+          pip install --quiet pip-audit
+          pip install --quiet pypdf
+          pip-audit --desc || true
+
+      - name: npm audit
+        run: npm audit --audit-level=high || true

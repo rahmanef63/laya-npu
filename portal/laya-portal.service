@@ -1,0 +1,20 @@
+[Unit]
+Description=laya-npu portal: device registry for Intel NPU installs
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/antinrml/apps/laya-portal
+Environment=PORTAL_PORT=8650
+Environment=PORTAL_BIND=0.0.0.0
+Environment=PORTAL_DB=/home/antinrml/apps/laya-portal/portal.sqlite
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/usr/bin/python3 portal/app.py
+Restart=always
+RestartSec=5
+NoNewPrivileges=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=default.target

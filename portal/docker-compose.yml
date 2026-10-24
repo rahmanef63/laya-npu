@@ -1,0 +1,38 @@
+# Portal as a container on dokploy-network, exposed through Traefik labels.
+#
+# Why labels instead of a dynamic config file: writing to
+# /etc/dokploy/traefik/dynamic/ needs root, and the only passwordless sudo rule on this
+# host covers another app's file. Docker provider labels achieve the same thing with
+# the access this user actually has.
+#
+#   docker compose -f portal/docker-compose.yml up -d
+services:
+  laya-portal:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: laya-portal:1
+    container_name: laya-portal
+    restart: unless-stopped
+    volumes:
+      - /home/antinrml/apps/laya-portal-data:/data
+    environment:
+      PORTAL_DB: /data/portal.sqlite
+      PORTAL_PORT: "8650"
+      PORTAL_BIND: 0.0.0.0
+    networks:
+      - dokploy-network
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: dokploy-network
+      traefik.http.routers.laya-portal.rule: Host(`laya.manef.dev`)
+      traefik.http.routers.laya-portal.entrypoints: websecure
+      traefik.http.routers.laya-portal.tls.certresolver: letsencrypt
+      traefik.http.routers.laya-portal-http.rule: Host(`laya.manef.dev`)
+      traefik.http.routers.laya-portal-http.entrypoints: web
+      traefik.http.routers.laya-portal-http.middlewares: redirect-to-https
+      traefik.http.services.laya-portal.loadbalancer.server.port: "8650"
+
+networks:
+  dokploy-network:
+    external: true

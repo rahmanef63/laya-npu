@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+/* Monochrome developer palette. Same tokens as the previous build so the visual
+   language carries over: near-black surfaces, hairline borders, one white accent. */
+@theme {
+  --color-page: #000000;
+  --color-panel: #080808;
+  --color-panel-2: #0d0d0d;
+  --color-hover: #161616;
+  --color-nav-active: #1a1a1a;
+
+  --color-ink: #ededed;
+  --color-ink-2: #9a9a9a;
+  --color-ink-3: #666666;
+
+  --color-line: #1e1e1e;
+  --color-line-2: #141414;
+
+  --radius-card: 6px;
+
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-page);
+  color: var(--color-ink);
+  font-family:
+    Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    font: inherit;
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: #3a3a3a;
+    color: #fff;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #383838;
+  }
+}
+
+@layer components {
+  .field {
+    width: 100%;
+    background: var(--color-panel-2);
+    color: var(--color-ink);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    padding: 8px 10px;
+    font-size: 12px;
+    resize: vertical;
+  }
+  .field:focus {
+    outline: none;
+    border-color: #3a3a3a;
+  }
+  .field::placeholder {
+    color: var(--color-ink-3);
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 9px;
+    border-radius: 999px;
+    background: var(--color-panel-2);
+    border: 1px solid var(--color-line);
+    color: var(--color-ink-2);
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .label {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+    font-weight: 600;
+  }
+
+  .card {
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    background: transparent;
+    color: var(--color-ink);
+    padding: 5px 10px;
+    font-size: 12px;
+    transition:
+      background 0.12s,
+      border-color 0.12s;
+  }
+  .btn:hover {
+    background: var(--color-hover);
+    border-color: #2a2a2a;
+  }
+  .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .btn-solid {
+    background: var(--color-ink);
+    color: #000;
+    border-color: var(--color-ink);
+    font-weight: 600;
+  }
+  .btn-solid:hover {
+    background: #d8d8d8;
+  }
+
+  .mono {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+}

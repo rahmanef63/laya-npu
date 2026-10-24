@@ -1,0 +1,21 @@
+# laya-npu portal: public device registry + landing page.
+# Managed by hand; the app listens on 127.0.0.1:8650 and Traefik terminates TLS.
+http:
+  routers:
+    laya-portal-web:
+      rule: Host(`laya.manef.dev`)
+      service: laya-portal-svc
+      entryPoints: [web]
+      middlewares: [redirect-to-https]
+    laya-portal-secure:
+      rule: Host(`laya.manef.dev`)
+      service: laya-portal-svc
+      entryPoints: [websecure]
+      tls:
+        certResolver: letsencrypt
+  services:
+    laya-portal-svc:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: http://172.30.1.1:8650

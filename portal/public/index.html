@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>laya-npu — the NPU in your laptop, actually doing something</title>
+    <meta name="description" content="Typed decisions in 29 ms and speech to text at 57x realtime, on the Intel NPU already inside your laptop. No cloud, no API keys, no per-token bill. Open source, Apache-2.0." />
+    <meta name="theme-color" content="#000000" />
+    <link rel="canonical" href="https://laya.manef.dev/" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://laya.manef.dev/" />
+    <meta property="og:site_name" content="laya-npu" />
+    <meta property="og:title" content="laya-npu — the NPU in your laptop, actually doing something" />
+    <meta property="og:description" content="Typed decisions in 29 ms and speech to text at 57x realtime, entirely on the Intel NPU. No cloud, no keys, no per-token bill." />
+    <meta property="og:image" content="https://laya.manef.dev/og.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="laya-npu: 29 ms per decision, 57x realtime speech, 85 MB model, $0 per request." />
+    <meta property="og:locale" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="laya-npu — the NPU in your laptop, actually doing something" />
+    <meta name="twitter:description" content="29 ms per decision, 57x realtime transcription, both on the NPU you already own." />
+    <meta name="twitter:image" content="https://laya.manef.dev/og.png" />
+    <meta name="twitter:image:alt" content="laya-npu: typed decisions and local speech on the Intel NPU." />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "laya-npu",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Windows, Linux",
+        "description": "Typed decision model and local speech recognition running on the Intel NPU through OpenVINO. Decisions in about 29 ms, transcription at 57x realtime, no cloud dependency.",
+        "url": "https://laya.manef.dev/",
+        "image": "https://laya.manef.dev/og.png",
+        "license": "https://www.apache.org/licenses/LICENSE-2.0",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "rahmanef63", "url": "https://rahmanef.com" }
+      }
+    </script>
+
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="https://manef.dev"><span class="mark"></span>laya<span class="dim">npu</span></a>
+      <nav>
+        <a href="#install">Install</a>
+        <a href="#check">Check my machine</a>
+        <a href="https://github.com/rahmanef63/laya-npu">GitHub</a>
+      </nav>
+      <a class="cta" href="#install">Get started</a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <span class="pill" id="live-pill"><span class="dot"></span> checking registry…</span>
+        <h1>Your NPU can decide things.<br />You just never had software for it.</h1>
+        <p class="lede">
+          Every Core Ultra ships a neural processor that most people never touch, because
+          using it means writing OpenVINO code. This is a working app for it: typed
+          decisions — routing, triage, guardrails — in about 30 ms, on the machine in
+          front of you.
+        </p>
+        <div class="actions">
+          <a class="btn solid" href="#install">Install in one click</a>
+          <a class="btn" href="https://github.com/rahmanef63/laya-npu">Read the source</a>
+        </div>
+        <div class="stats" id="stats">
+          <div><b id="n-total">—</b><span>devices registered</span></div>
+          <div><b id="n-online">—</b><span>online now</span></div>
+          <div><b id="n-npu">—</b><span>with a working NPU</span></div>
+          <div><b id="n-byok">—</b><span>using BYOK</span></div>
+        </div>
+      </section>
+
+      <section id="install">
+        <h2>Install</h2>
+        <p class="sub">
+          Windows with an Intel Core Ultra gets the NPU path. Everything else runs on the
+          GPU or CPU — same answers, slower.
+        </p>
+
+        <div class="dl-grid">
+          <a class="dl-card primary" href="https://github.com/rahmanef63/laya-npu/archive/refs/heads/main.zip">
+            <span class="dl-h">Download for Windows</span>
+            <span class="dl-s">zip · then double-click <code>install.cmd</code></span>
+            <span class="dl-m mono" id="dl-size">source archive</span>
+          </a>
+          <a class="dl-card" href="https://github.com/rahmanef63/laya-npu">
+            <span class="dl-h">View the source</span>
+            <span class="dl-s">GitHub · Apache-2.0</span>
+            <span class="dl-m mono">git clone</span>
+          </a>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <span class="n">1</span>
+            <div>
+              <h3>Download and extract</h3>
+              <p>
+                The zip is the source. No installer binary is published, and that is
+                deliberate: an unsigned .exe that downloads a model and a driver is not
+                something to hand out.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <span class="n">2</span>
+            <div>
+              <h3>Double-click install.cmd</h3>
+              <p>
+                Finds or installs Python, installs OpenVINO, downloads the 405 MB model,
+                rebuilds it for the NPU, reads your driver version, checks which devices
+                compile, builds the UI and makes a desktop shortcut.
+              </p>
+              <pre><code>install.cmd</code></pre>
+            </div>
+          </div>
+
+          <div class="step">
+            <span class="n">3</span>
+            <div>
+              <h3>Open the shortcut</h3>
+              <p>Double-click the laya-npu icon on your Desktop.</p>
+              <pre><code>http://localhost:8649</code></pre>
+            </div>
+          </div>
+
+          <div class="step">
+            <span class="n">4</span>
+            <div>
+              <h3>Check what you got</h3>
+              <p>
+                The app opens on <b>Setup check</b>: four rows for server, hardware, NPU
+                and driver. Any red row carries its own fix. Below that, pick NPU, GPU or
+                CPU.
+              </p>
+              <p class="note-small">
+                On WSL, run <code>./install.sh</code> instead — it hands off to the Windows
+                installer, because the NPU is not reachable from inside the VM. Linux gets
+                CPU and BYOK.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="why">
+        <h2>Why this exists</h2>
+        <div class="cards">
+          <div class="card">
+            <h3>The NPU is idle</h3>
+            <p>
+              Windows uses it for Studio Effects and live captions. That is roughly it.
+              There is no general-purpose path from "I have a neural processor" to "I have
+              a program that decides things".
+            </p>
+          </div>
+          <div class="card">
+            <h3>Cloud calls cost money per decision</h3>
+            <p>
+              Routing a ticket, gating a prompt, labelling an issue: each one is a
+              metered API call today. A 421M decision model on hardware you own makes
+              them free.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Text models cannot do this well</h3>
+            <p>
+              Asking an LLM to output JSON for a 4-way choice means parsing, retries and
+              hallucinated labels. A decision model returns probabilities and no prose.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="check">
+        <h2>Does this machine have an NPU?</h2>
+        <p class="sub">
+          Runs entirely in your browser. Nothing is uploaded, and no driver is installed
+          — it only reports what the browser is allowed to see, plus what the public
+          registry can confirm about a device ID.
+        </p>
+
+        <div class="card detect">
+          <div class="detect-row">
+            <span class="dl">WebGPU</span>
+            <span class="dv" id="d-webgpu">checking…</span>
+          </div>
+          <div class="detect-row">
+            <span class="dl">Browser reports</span>
+            <span class="dv" id="d-hints">—</span>
+          </div>
+          <div class="detect-row">
+            <span class="dl">Device ID</span>
+            <span class="dv mono" id="d-verdict">paste an ID below to check the registry</span>
+          </div>
+        </div>
+
+        <div class="link">
+          <input id="link-input" placeholder="NPU-XXXX-XXXX" autocomplete="off" spellcheck="false" />
+          <button class="btn solid" onclick="checkDevice()">Check ID</button>
+        </div>
+        <p class="result" id="link-result"></p>
+
+        <p class="caution">
+          A browser cannot read your NPU: no web API exposes it. The accurate check is the
+          app's <b>Setup check</b> page, which reads the device from Windows directly.
+          WebGPU above only tells you whether the GPU path works.
+        </p>
+      </section>
+
+      <section id="registry">
+        <h2>Registry</h2>
+        <p class="sub">
+          Aggregate counts only. Individual machines are not published: a device row shows
+          which hardware someone owns and when they use it, which is nobody else's
+          business.
+        </p>
+        <div class="stats" id="stats2">
+          <div><b id="r-total">—</b><span>installs</span></div>
+          <div><b id="r-online">—</b><span>active in 15 min</span></div>
+          <div><b id="r-npu">—</b><span>with a working NPU</span></div>
+          <div><b id="r-byok">—</b><span>using BYOK</span></div>
+        </div>
+        <div class="bars" id="r-bars"></div>
+      </section>
+
+      <section id="faq">
+        <h2>Questions</h2>
+        <div class="faq">
+          <details open>
+            <summary>Does this send my data anywhere?</summary>
+            <p>
+              No. Inference runs locally in the OpenVINO runtime. If you link a device ID,
+              the app sends a small heartbeat every five minutes containing the ID, the OS,
+              the app version, and which devices compiled. No text, no prompts, no file
+              paths, no credentials.
+            </p>
+          </details>
+          <details>
+            <summary>What if my machine has no NPU?</summary>
+            <p>
+              It still works. The app falls back to the integrated GPU or the CPU. On a
+              Core Ultra 9 386H the NPU answers in 66 ms, the GPU in 43 ms, the CPU in
+              443 ms — same answers.
+            </p>
+          </details>
+          <details>
+            <summary>Can I use my own hosted endpoint instead?</summary>
+            <p>
+              Yes. The Compute page has a BYOK tab: point it at any server that speaks the
+              Jev System One protocol with your key. The key stays server-side and is never
+              written to disk.
+            </p>
+          </details>
+          <details>
+            <summary>Does it handle languages other than English?</summary>
+            <p>
+              Not yet. The shipped checkpoint is English and scores near zero on non-Latin
+              scripts while still reporting high confidence, which is a silent failure. The
+              multilingual checkpoint has never been exported to OpenVINO.
+            </p>
+          </details>
+          <details>
+            <summary>Why does the model not pick the action?</summary>
+            <p>
+              Because it scores 2/12 at that and 22/22 at answering its own preset
+              questions. Reading text is the model's job; your policy is yours. Every
+              action in the app comes from a small Python rule table you can edit.
+            </p>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Apache-2.0 · <a href="https://rahmanef.com">rahmanef.com</a> · <a href="https://manef.dev">manef.dev</a></span>
+      <span class="mono">Laya by Convai · OpenVINO backend by rupeshs</span>
+    </footer>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

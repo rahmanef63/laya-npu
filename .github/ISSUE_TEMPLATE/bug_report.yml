@@ -1,0 +1,42 @@
+name: Bug report
+description: Something does not work
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before filing: run the **Setup check** page in the app and paste the four rows.
+        They answer most hardware questions immediately.
+
+        Do not paste model input, prompts, API keys, or file contents.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you expected, and what you got instead.
+    validations: { required: true }
+  - type: textarea
+    id: setup
+    attributes:
+      label: Setup check output
+      description: Server / hardware / NPU / driver rows, or the installer output.
+      render: text
+    validations: { required: true }
+  - type: input
+    id: os
+    attributes:
+      label: OS and CPU
+      placeholder: Windows 11, Intel Core Ultra 7 258V
+    validations: { required: true }
+  - type: dropdown
+    id: shell
+    attributes:
+      label: How did you install it
+      options: [install.cmd on Windows, ./install.sh in WSL, ./install.sh on Linux, other]
+    validations: { required: true }
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant output
+      description: Last lines of the installer or server window. Redact paths if you care.
+      render: text

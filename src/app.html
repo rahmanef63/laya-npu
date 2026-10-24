@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%sveltekit.assets%/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="%sveltekit.assets%/apple-touch-icon.png" />
+    <link rel="manifest" href="%sveltekit.assets%/manifest.json" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>laya-npu — typed decisions and local speech on your Intel NPU</title>
+    <meta
+      name="description"
+      content="Route tickets, gate prompts and transcribe audio on the Intel NPU already inside your laptop. 29 ms per decision, 57x realtime speech, no cloud, no API keys, no per-token bill."
+    />
+    <meta name="theme-color" content="#000000" />
+    <link rel="canonical" href="https://laya.manef.dev/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://laya.manef.dev/" />
+    <meta property="og:site_name" content="laya-npu" />
+    <meta
+      property="og:title"
+      content="laya-npu — the NPU in your laptop, actually doing something"
+    />
+    <meta
+      property="og:description"
+      content="Typed decisions in 29 ms and speech to text at 57x realtime, entirely on the Intel NPU. Open source, Apache-2.0, no accounts."
+    />
+
+    <!-- Social card. 1200x630 PNG, generated from static/og.svg. -->
+    <meta property="og:image" content="https://laya.manef.dev/og.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="laya-npu: the NPU in your laptop, actually doing something. 29 ms per decision, 57x realtime speech, 85 MB model, $0 per request."
+    />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://laya.manef.dev/og.png" />
+    <meta name="twitter:image:alt" content="laya-npu: typed decisions and local speech on the Intel NPU." />
+    <meta
+      name="twitter:title"
+      content="laya-npu — typed decisions and local speech on your Intel NPU"
+    />
+    <meta
+      name="twitter:description"
+      content="29 ms per decision, 57x realtime transcription, both on the NPU you already own. No cloud, no keys, no per-token bill."
+    />
+
+    <!-- What this is, for machines that read JSON-LD -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "laya-npu",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Windows, Linux",
+        "description": "Typed decision model and local speech recognition running on the Intel NPU through OpenVINO. Decisions in ~29 ms, transcription at 57x realtime, with no cloud dependency.",
+        "url": "https://laya.manef.dev/",
+        "image": "https://laya.manef.dev/og.png",
+        "license": "https://www.apache.org/licenses/LICENSE-2.0",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "rahmanef63", "url": "https://rahmanef.com" },
+        "featureList": [
+          "Typed decisions (choice, score, noul) in ~29 ms on the Intel NPU",
+          "Local speech to text at 57x realtime with Whisper int8",
+          "PDF and document routing from a directory",
+          "LLM guardrail: jailbreak and prompt injection detection",
+          "Bring your own endpoint (BYOK)"
+        ]
+      }
+    </script>
+
+    %sveltekit.head%
+  </head>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">%sveltekit.body%</div>
+  </body>
+</html>

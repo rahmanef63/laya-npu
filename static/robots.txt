@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://laya.manef.dev/sitemap.xml
