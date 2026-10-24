@@ -15,6 +15,17 @@ cd laya-npu
 
 You need Python 3.10+ and Node 20+. The installer handles both if they are missing.
 
+## Where to read first
+
+| Document | What it answers |
+|---|---|
+| [docs/DEVELOPING.md](docs/DEVELOPING.md) | how to get a dev environment, what needs the model, conventions, how to add a preset, endpoint or section |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | module map, wire format, the three NPU quirks, known pitfalls |
+| [SECURITY.md](SECURITY.md) | defaults, the heartbeat payload, and the gaps we know about |
+
+The web UI source is in this repo, in `src/` — 32 files of `.svelte` and `.ts`, no
+compiled bundle. `npm run dev` gives you hot reload against the real API.
+
 ## Running the tests
 
 Two harnesses, both of which need a working model:

@@ -8,7 +8,7 @@ compute you have: an Intel NPU, a GPU, a CPU, or an endpoint you bring yourself.
 [![python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![node](https://img.shields.io/badge/node-20%2B-blue.svg)](https://nodejs.org/)
 
-**Live:** [laya.manef.dev](https://laya.manef.dev) · **Docs:** everything is in this file
+**Live:** [laya.manef.dev](https://laya.manef.dev) · **Web UI source:** `src/` in this repo, not a bundle
 
 ---
 
@@ -419,6 +419,11 @@ make lint     # python syntax + ruff + svelte-check
 make test     # policy and accuracy harnesses, real model, no mocks
 make bench    # re-measure backend latency
 ```
+
+New to the codebase? [docs/DEVELOPING.md](docs/DEVELOPING.md) gets you to a running dev
+environment, and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) explains how the pieces fit.
+The web UI is fully in this repo under `src/` — `npm run dev` gives hot reload against the
+real API.
 
 Security issues: see [SECURITY.md](SECURITY.md). Do not open a public issue.
 

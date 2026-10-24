@@ -26,4 +26,19 @@ export default defineConfig({
       },
     }),
   ],
+  // `npm run dev` serves the UI on 5173 while the Python server owns the API on 8649.
+  // Without this, every /api call is a 404 in dev mode and a contributor cannot see
+  // real data without building first.
+  server: {
+    proxy: {
+      "/api": {
+        // Read through globalThis so this file type-checks without @types/node,
+        // which the project does not otherwise need.
+        target:
+          (globalThis as { process?: { env?: Record<string, string | undefined> } })
+            .process?.env?.LAYA_API ?? "http://127.0.0.1:8649",
+        changeOrigin: false,
+      },
+    },
+  },
 });
